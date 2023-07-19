@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const secret = 'mysecretsshhhhh';
+const secret = process.env.JWT_SECRET;;
 const expiration = '3h';
 
 module.exports = {
@@ -21,8 +22,8 @@ module.exports = {
       const decodedToken = jwt.verify(token, secret);
       // userName and user data from the token
       req.user = decodedToken.data; 
-    } catch (error) {
-      console.error('Error verifying token:', error.message);
+    } catch (err) {
+      console.error('Error verifying token:', err.message);
     }
 
     return req;
