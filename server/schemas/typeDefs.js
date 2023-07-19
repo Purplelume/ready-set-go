@@ -56,6 +56,11 @@ const typeDefs = gql`
     projects: [Project]
   }
 
+  type AuthPayload {
+    token: ID
+    user: User
+  }
+
   scalar DateTime
 
   type Query {
@@ -63,41 +68,49 @@ const typeDefs = gql`
     projects: [Project]
     user(id: ID!): User
     users: [User]
+    me: User
   }
 
   type Mutation {
-    createProject(input: CreateProjectInput!): Project
-    updateProject(id: ID!, input: UpdateProjectInput!): Project
+    login(email: String!, password: String!): AuthPayload
+    createProject(
+      title: String!
+      description: String!
+      category: String!
+      goal: Float!
+      startDateTime: DateTime!
+      endDateTime: DateTime!
+      images: [String]
+      rewards: [RewardInput]
+      socialMediaLinks: SocialMediaLinksInput
+      createdBy: ID!
+    ): Project
+    updateProject(
+      id: ID!
+      title: String
+      description: String
+      category: String
+      goal: Float
+      startDateTime: DateTime
+      endDateTime: DateTime
+      images: [String]
+      rewards: [RewardInput]
+      socialMediaLinks: SocialMediaLinksInput
+      createdBy: ID
+    ): Project
     deleteProject(id: ID!): Project
-    createUser(input: CreateUserInput!): User
-    updateUser(id: ID!, input: UpdateUserInput!): User
+    createUser(
+      userName: String!
+      email: String!
+      password: String!
+    ): AuthPayload
+    updateUser(
+      id: ID!
+      userName: String
+      email: String
+      password: String
+    ): User
     deleteUser(id: ID!): User
-  }
-
-  input CreateProjectInput {
-    title: String!
-    description: String!
-    category: String!
-    goal: Float!
-    startDateTime: DateTime!
-    endDateTime: DateTime!
-    images: [String]
-    rewards: [RewardInput]
-    socialMediaLinks: SocialMediaLinksInput
-    createdBy: ID!
-  }
-
-  input UpdateProjectInput {
-    title: String
-    description: String
-    category: String
-    goal: Float
-    startDateTime: DateTime
-    endDateTime: DateTime
-    images: [String]
-    rewards: [RewardInput]
-    socialMediaLinks: SocialMediaLinksInput
-    createdBy: ID
   }
 
   input RewardInput {
@@ -110,18 +123,6 @@ const typeDefs = gql`
     facebook: String
     instagram: String
     linkedin: String
-  }
-
-  input CreateUserInput {
-    userName: String!
-    email: String!
-    password: String!
-  }
-
-  input UpdateUserInput {
-    userName: String
-    email: String
-    password: String
   }
 `;
 

@@ -1,143 +1,143 @@
+const { User, Project } = require('../models');
+const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Product, Category, Order } = require('../models');
 const { signToken } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 
 const resolvers = {
   Query: {
-    categories: async () => {
-      return await Category.find();
+    project: async (parent, { id }) => {
+      try {
+        const project = await Project.findById(id);
+        return project;
+      } catch (error) {
+        throw new Error('Error fetching project');
+      }
     },
-    products: async (parent, { category, name }) => {
-      const params = {};
-
-      if (category) {
-        params.category = category;
+    projects: async () => {
+      try {
+        const projects = await Project.find();
+        return projects;
+      } catch (error) {
+        throw new Error('Error fetching projects');
+      }
+    },
+    user: async (parent, { id }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to access this data.');
       }
 
-      if (name) {
-        params.name = {
-          $regex: name
-        };
-      }
-
-      return await Product.find(params).populate('category');
-    },
-    product: async (parent, { _id }) => {
-      return await Product.findById(_id).populate('category');
-    },
-    user: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
+      try {
+        const user = await User.findById(id);
         return user;
+      } catch (error) {
+        throw new Error('Error fetching user');
       }
-
-      throw new AuthenticationError('Not logged in');
     },
-    order: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id).populate({
-          path: 'orders.products',
-          populate: 'category'
-        });
-
-        return user.orders.id(_id);
+    users: async () => {
+      try {
+        const users = await User.find();
+        return users;
+      } catch (error) {
+        throw new Error('Error fetching users');
       }
-
-      throw new AuthenticationError('Not logged in');
     },
-    checkout: async (parent, args, context) => {
-      const url = new URL(context.headers.referer).origin;
-      const order = new Order({ products: args.products });
-      const line_items = [];
-
-      const { products } = await order.populate('products');
-
-      for (let i = 0; i < products.length; i++) {
-        const product = await stripe.products.create({
-          name: products[i].name,
-          description: products[i].description,
-          images: [`${url}/images/${products[i].image}`]
-        });
-
-        const price = await stripe.prices.create({
-          product: product.id,
-          unit_amount: products[i].price * 100,
-          currency: 'usd',
-        });
-
-        line_items.push({
-          price: price.id,
-          quantity: 1
-        });
+    // Add a resolver for the "me" field to get the authenticated user
+    me: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('You must be logged in to access this data.');
       }
 
-      const session = await stripe.checkout.sessions.create({
-        payment_method_types: ['card'],
-        line_items,
-        mode: 'payment',
-        success_url: `${url}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${url}/`
-      });
-
-      return { session: session.id };
-    }
+      try {
+        const user = await User.findById(context.user._id);
+        return user;
+      } catch (error) {
+        throw new Error('Error fetching authenticated user');
+      }
+    },
   },
   Mutation: {
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
-
-      return { token, user };
-    },
-    addOrder: async (parent, { products }, context) => {
-      console.log(context);
-      if (context.user) {
-        const order = new Order({ products });
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { orders: order } });
-
-        return order;
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-    updateProduct: async (parent, { _id, quantity }) => {
-      const decrement = Math.abs(quantity) * -1;
-
-      return await Product.findByIdAndUpdate(_id, { $inc: { quantity: decrement } }, { new: true });
-    },
     login: async (parent, { email, password }) => {
+      // Your authentication logic here (e.g., check email and password validity)
+      // If the user is authenticated, you can create and return the JWT token
       const user = await User.findOne({ email });
 
-      if (!user) {
-        throw new AuthenticationError('Incorrect credentials');
+      if (!user || !(await user.isCorrectPassword(password))) {
+        throw new AuthenticationError('Invalid email or password');
       }
 
-      const correctPw = await user.isCorrectPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
-      }
-
-      const token = signToken(user);
-
+      const token = signToken(user); // Sign the JWT token
       return { token, user };
-    }
-  }
+    },
+    createProject: async (parent, { input }) => {
+      try {
+        const project = await Project.create(input);
+        return project;
+      } catch (error) {
+        throw new Error('Error creating project');
+      }
+    },
+    updateProject: async (parent, { id, input }) => {
+      try {
+        const project = await Project.findByIdAndUpdate(id, input, { new: true });
+        return project;
+      } catch (error) {
+        throw new Error('Error updating project');
+      }
+    },
+    deleteProject: async (parent, { id }) => {
+      try {
+        const project = await Project.findByIdAndRemove(id);
+        return project;
+      } catch (error) {
+        throw new Error('Error deleting project');
+      }
+    },
+    createUser: async (parent, { input }) => {
+      try {
+        const user = await User.create(input);
+        return user;
+      } catch (error) {
+        console.error('Error creating user:', error.message);
+        throw new Error('Error creating user');
+      }
+    },
+    updateUser: async (parent, { id, input }) => {
+      try {
+        const user = await User.findByIdAndUpdate(id, input, { new: true });
+        return user;
+      } catch (error) {
+        throw new Error('Error updating user');
+      }
+    },
+    deleteUser: async (parent, { id }) => {
+      try {
+        const user = await User.findByIdAndRemove(id);
+        return user;
+      } catch (error) {
+        throw new Error('Error deleting user');
+      }
+    },
+  },
+  Project: {
+    createdBy: async (parent) => {
+      try {
+        const user = await User.findById(parent.createdBy);
+        return user;
+      } catch (error) {
+        throw new Error('Error fetching createdBy user');
+      }
+    },
+  },
+  User: {
+    projects: async (parent) => {
+      try {
+        const projects = await Project.find({ createdBy: parent._id });
+        return projects;
+      } catch (error) {
+        throw new Error('Error fetching user projects');
+      }
+    },
+  },
 };
 
 module.exports = resolvers;
