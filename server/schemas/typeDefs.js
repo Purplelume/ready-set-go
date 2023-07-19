@@ -53,6 +53,7 @@ const typeDefs = gql`
     _id: ID!
     userName: String!
     email: String!
+    password: String!
     projects: [Project]
   }
 
@@ -73,43 +74,11 @@ const typeDefs = gql`
 
   type Mutation {
     login(email: String!, password: String!): AuthPayload
-    createProject(
-      title: String!
-      description: String!
-      category: String!
-      goal: Float!
-      startDateTime: DateTime!
-      endDateTime: DateTime!
-      images: [String]
-      rewards: [RewardInput]
-      socialMediaLinks: SocialMediaLinksInput
-      createdBy: ID!
-    ): Project
-    updateProject(
-      id: ID!
-      title: String
-      description: String
-      category: String
-      goal: Float
-      startDateTime: DateTime
-      endDateTime: DateTime
-      images: [String]
-      rewards: [RewardInput]
-      socialMediaLinks: SocialMediaLinksInput
-      createdBy: ID
-    ): Project
+    createProject(input: CreateProjectInput!): Project
+    updateProject(id: ID!, input: UpdateProjectInput!): Project
     deleteProject(id: ID!): Project
-    createUser(
-      userName: String!
-      email: String!
-      password: String!
-    ): AuthPayload
-    updateUser(
-      id: ID!
-      userName: String
-      email: String
-      password: String
-    ): User
+    createUser(input: CreateUserInput!): AuthPayload
+    updateUser(id: ID!, input: UpdateUserInput!): User
     deleteUser(id: ID!): User
   }
 
@@ -118,11 +87,49 @@ const typeDefs = gql`
     estimatedDeliveryDate: DateTime
   }
 
+  input UpdateProjectInput {
+    title: String
+    description: String
+    category: String
+    goal: Float
+    startDateTime: DateTime
+    endDateTime: DateTime
+    images: [String]
+    rewards: [RewardInput]
+    socialMediaLinks: SocialMediaLinksInput
+    createdBy: ID
+  }
+
   input SocialMediaLinksInput {
     email: String
     facebook: String
     instagram: String
     linkedin: String
+  }
+
+  input CreateUserInput {
+    userName: String!
+    email: String!
+    password: String!
+  }
+
+  input UpdateUserInput {
+    userName: String
+    email: String
+    password: String
+  }
+
+  input CreateProjectInput {
+    title: String!
+    description: String!
+    category: String!
+    goal: Float!
+    startDateTime: DateTime!
+    endDateTime: DateTime!
+    images: [String]
+    rewards: [RewardInput]
+    socialMediaLinks: SocialMediaLinksInput
+    createdBy: ID!
   }
 `;
 

@@ -94,7 +94,9 @@ const resolvers = {
     },
     createUser: async (parent, { input }) => {
       try {
+        console.log('Received input for createUser:', input);
         const user = await User.create(input);
+        console.log('User created:', user);
         return user;
       } catch (error) {
         console.error('Error creating user:', error.message);
