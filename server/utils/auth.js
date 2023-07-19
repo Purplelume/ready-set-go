@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const secret = 'mysecretsshhhhh';
-const expiration = '2h';
+const expiration = '3h';
 
 module.exports = {
   authMiddleware: function ({ req }) {
@@ -19,9 +19,9 @@ module.exports = {
 
     try {
       const decodedToken = jwt.verify(token, secret);
-      req.user = decodedToken.data; // The user data from the token, including userName
+      // userName and user data from the token
+      req.user = decodedToken.data; 
     } catch (error) {
-      // Optionally, log the error for troubleshooting purposes
       console.error('Error verifying token:', error.message);
     }
 
