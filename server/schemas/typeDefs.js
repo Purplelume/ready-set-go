@@ -56,6 +56,10 @@ const typeDefs = gql`
     projects: [Project]
   }
 
+  type DonateResult {
+    clientSecret: String!
+  }
+
   type AuthPayload {
     token: ID
     user: User
@@ -73,6 +77,8 @@ const typeDefs = gql`
 
   type Mutation {
     login(email: String!, password: String!): AuthPayload
+    donateToProject(projectId: ID!, amount: Float!): DonateResult!
+    handleDonationSuccess(paymentIntentId: ID!): Project!
     createProject(input: CreateProjectInput!): Project
     updateProject(id: ID!, input: UpdateProjectInput!): Project
     deleteProject(id: ID!): Project

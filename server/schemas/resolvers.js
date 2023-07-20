@@ -62,6 +62,62 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    donateToProject: async (parent, { projectId, amount }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+
+      try {
+        const project = await Project.findById(projectId);
+        if (!project) {
+          throw new Error('Project not found');
+        }
+
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: amount * 100,
+          currency: 'usd',
+          description: `Donation to project: ${project.title}`,
+          metadata: {
+            // Store the project ID as metadata
+            projectId: project._id.toString(),
+          },
+        });
+
+        return { clientSecret: paymentIntent.client_secret };
+      } catch (error) {
+        console.error('Error processing donation:', error.message);
+        throw new Error('Error processing donation');
+      }
+    },
+    handleDonationSuccess: async (parent, { paymentIntentId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError('Not logged in');
+      }
+
+      try {
+        const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+        if (paymentIntent.status === 'succeeded') {
+          // Retrieve the project ID from the metadata
+          const projectId = paymentIntent.metadata.projectId;
+
+          const project = await Project.findById(projectId);
+          if (!project) {
+            throw new Error('Project not found');
+          }
+
+          project.fundingProgress += paymentIntent.amount / 100;
+          await project.save();
+
+          return project;
+        } else {
+          throw new Error('Payment was not successful');
+        }
+      } catch (error) {
+        console.error('Error handling donation success:', error.message);
+        throw new Error('Error handling donation success');
+      }
+    },
     createProject: async (parent, { input }) => {
       try {
         const project = await Project.create(input);

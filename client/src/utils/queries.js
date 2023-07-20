@@ -1,69 +1,265 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_PRODUCTS = gql`
-  query getProducts($category: ID) {
-    products(category: $category) {
+export const GET_PROJECT = gql`
+  query getProject($id: ID!) {
+    project(id: $id) {
       _id
-      name
+      title
       description
-      price
-      quantity
-      image
-      category {
-        _id
+      category
+      goal
+      startDateTime
+      endDateTime
+      images
+      fundingProgress
+      rewards {
+        description
+        estimatedDeliveryDate
       }
-    }
-  }
-`;
-
-export const QUERY_CHECKOUT = gql`
-  query getCheckout($products: [ID]!) {
-    checkout(products: $products) {
-      session
-    }
-  }
-`;
-
-export const QUERY_ALL_PRODUCTS = gql`
-  {
-    products {
-      _id
-      name
-      description
-      price
-      quantity
-      category {
-        name
+      updates {
+        title
+        content
+        createdAt
       }
-    }
-  }
-`;
-
-export const QUERY_CATEGORIES = gql`
-  {
-    categories {
-      _id
-      name
-    }
-  }
-`;
-
-export const QUERY_USER = gql`
-  {
-    user {
-      firstName
-      lastName
-      orders {
-        _id
-        purchaseDate
-        products {
+      socialMediaLinks {
+        email
+        facebook
+        instagram
+        linkedin
+      }
+      comments {
+        user {
           _id
-          name
-          description
-          price
-          quantity
-          image
+          userName
+          email
         }
+        comment
+        createdAt
+      }
+      stretchGoals {
+        goalAmount
+        description
+      }
+      createdBy {
+        _id
+        userName
+        email
+      }
+      backers
+    }
+  }
+`;
+
+export const GET_PROJECTS = gql`
+  query getProjects {
+    projects {
+      _id
+      title
+      description
+      category
+      goal
+      startDateTime
+      endDateTime
+      images
+      fundingProgress
+      rewards {
+        description
+        estimatedDeliveryDate
+      }
+      updates {
+        title
+        content
+        createdAt
+      }
+      socialMediaLinks {
+        email
+        facebook
+        instagram
+        linkedin
+      }
+      comments {
+        user {
+          _id
+          userName
+          email
+        }
+        comment
+        createdAt
+      }
+      stretchGoals {
+        goalAmount
+        description
+      }
+      createdBy {
+        _id
+        userName
+        email
+      }
+      backers
+    }
+  }
+`;
+
+export const GET_USER = gql`
+  query getUser($id: ID!) {
+    user(id: $id) {
+      _id
+      userName
+      email
+      projects {
+        _id
+        title
+        description
+        category
+        goal
+        startDateTime
+        endDateTime
+        images
+        fundingProgress
+        rewards {
+          description
+          estimatedDeliveryDate
+        }
+        updates {
+          title
+          content
+          createdAt
+        }
+        socialMediaLinks {
+          email
+          facebook
+          instagram
+          linkedin
+        }
+        comments {
+          user {
+            _id
+            userName
+            email
+          }
+          comment
+          createdAt
+        }
+        stretchGoals {
+          goalAmount
+          description
+        }
+        createdBy {
+          _id
+          userName
+          email
+        }
+        backers
+      }
+    }
+  }
+`;
+
+export const GET_USERS = gql`
+  query getUsers {
+    users {
+      _id
+      userName
+      email
+      projects {
+        _id
+        title
+        description
+        category
+        goal
+        startDateTime
+        endDateTime
+        images
+        fundingProgress
+        rewards {
+          description
+          estimatedDeliveryDate
+        }
+        updates {
+          title
+          content
+          createdAt
+        }
+        socialMediaLinks {
+          email
+          facebook
+          instagram
+          linkedin
+        }
+        comments {
+          user {
+            _id
+            userName
+            email
+          }
+          comment
+          createdAt
+        }
+        stretchGoals {
+          goalAmount
+          description
+        }
+        createdBy {
+          _id
+          userName
+          email
+        }
+        backers
+      }
+    }
+  }
+`;
+
+export const GET_CURRENT_USER = gql`
+  query getCurrentUser {
+    me {
+      _id
+      userName
+      email
+      projects {
+        _id
+        title
+        description
+        category
+        goal
+        startDateTime
+        endDateTime
+        images
+        fundingProgress
+        rewards {
+          description
+          estimatedDeliveryDate
+        }
+        updates {
+          title
+          content
+          createdAt
+        }
+        socialMediaLinks {
+          email
+          facebook
+          instagram
+          linkedin
+        }
+        comments {
+          user {
+            _id
+            userName
+            email
+          }
+          comment
+          createdAt
+        }
+        stretchGoals {
+          goalAmount
+          description
+        }
+        createdBy {
+          _id
+          userName
+          email
+        }
+        backers
       }
     }
   }
