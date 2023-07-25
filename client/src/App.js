@@ -13,6 +13,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from "./pages/Home"
 import Project from "./pages/Project"
 import Nav from "./components/Nav/Nav"
+// import Signup from './pages/Signup';
+// import Login from './pages/Login';
 
 const httpLink = createHttpLink({
     uri: '/graphql',
@@ -48,6 +50,14 @@ const authLink = setContext((_, { headers }) => {
                 path="/" 
                 element={<Home/>} 
               />
+              {/* <Route 
+                path="/signup" 
+                element={<Signup/>} 
+              />
+              <Route 
+                path="/login" 
+                element={<Login/>} 
+              /> */}
               <Route
                 path="/project/:id"
                 element={<Project/>}
