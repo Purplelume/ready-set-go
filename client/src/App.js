@@ -8,6 +8,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css"
 
 
 import Home from "./pages/Home"
@@ -16,6 +17,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import User from './pages/User';
 import Header from './components/Header';
+import Footer from "./components/Footer"
 
 
 const httpLink = createHttpLink({
@@ -75,7 +77,7 @@ function App() {
               />
             </Routes>
           </div>
-          {/* <Footer /> */}
+          <Footer />
         </div>
       </Router>
     </ApolloProvider>

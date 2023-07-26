@@ -1,48 +1,60 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import Auth from '../../utils/auth';
 
 const Header = () => {
-    const logout = (event) => {
-        event.preventDefault();
-        Auth.logout();
+  const logout = (event) => {
+    event.preventDefault();
+    Auth.logout();
+  };
+
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
     };
-    return (
-        <header className="bg-info text-dark mb-4 py-3 display-flex align-center">
-            <div className="container flex-column justify-space-between-lg justify-center align-center text-center">
-                <Link className="text-dark" to="/">
-                    <h1 className="m-0" style={{ fontSize: '3rem' }}>
-                        Tech Friends
-                    </h1>
-                </Link>
-                <p className="m-0" style={{ fontSize: '1.75rem', fontWeight: '700' }}>
-                    Meet your new programming pals.
-                </p>
-                <div>
-                    {Auth.loggedIn() ? (
-                        <>
-                            <Link className="btn btn-lg btn-primary m-2" to="/me">
-                                View My Profile
-                            </Link>
-                            <button className="btn btn-lg btn-light m-2" onClick={logout}>
-                                Logout
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <Link className="btn btn-lg btn-primary m-2" to="/login">
-                                Login
-                            </Link>
-                            <Link className="btn btn-lg btn-light m-2" to="/signup">
-                                Signup
-                            </Link>
-                        </>
-                    )}
-                </div>
-            </div>
-        </header>
-    );
+
+    window.addEventListener('scroll', onScroll);
+
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <header className={`navbar ${scrolled ? 'scrolled' : ''}`}>
+      <div className="container">
+        <Link to="/">
+          <h1>Ready <span>Set</span> Go</h1>
+        </Link>
+        <p>Get started with your project</p>
+        <div className="navbar-text">
+          {Auth.loggedIn() ? (
+            <>
+              <Link className="btn btn-primary m-1" to="/me">
+                My Profile
+              </Link>
+              <Link className="btn btn-light m-1" onClick={logout}>
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link className="btn btn-primary m-1" to="/login">
+                Login
+              </Link>
+              <Link className="btn btn-light m-1" to="/signup">
+                Signup
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+    </header>
+  );
 };
 
 export default Header;

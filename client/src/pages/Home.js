@@ -18,7 +18,7 @@ function Home() {
         {projects.map((project) => (
           <Col key={project._id} sm={12} md={6} lg={4} className="mb-4">
             <Card>
-              <Card.Img variant="top" src={project.images[0] || '/placeholder.jpg'} />
+              {/* <Card.Img variant="top" src={project.images[0] } /> */}
               <Card.Body>
                 <Card.Title>{project.title}</Card.Title>
                 <Card.Text>{project.description}</Card.Text>

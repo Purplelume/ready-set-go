@@ -49,7 +49,7 @@ function Project() {
           <ul className="list-unstyled">
             {project.images.map((image, index) => (
               <li key={index}>
-                <img src={image} alt={`Image ${index + 1}`} className="img-fluid rounded shadow mb-2" />
+                {/* <img src={image} alt={`Image ${index + 1}`} className="img-fluid rounded shadow mb-2" /> */}
               </li>
             ))}
           </ul>
