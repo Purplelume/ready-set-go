@@ -95,6 +95,16 @@ git push origin feature/new-feature
 
 5. Create a pull request into the main branch of the original repository.
 
+## Deployed Applicaion
+
+Visit [Live Page]().
+
+## Do you have any questions
+
+Don't esitate to reach me at my GitHub [Purplelume](https://github.com/Purplelume) or reach out at my email address: simone.monari23.gmail.com
+
 ## License
+
+![License Badge](https://shields.io/badge/license-MIT-blue)
 
 This project is licensed under the MIT License.
