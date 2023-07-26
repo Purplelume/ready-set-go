@@ -2,7 +2,16 @@ import decode from 'jwt-decode';
 
 class AuthService {
   getProfile() {
-    return decode(this.getToken());
+    const token = this.getToken();
+    if (token) {
+      try {
+        return decode(token);
+      } catch (err) {
+        console.error('Error decoding token:', err);
+        return null;
+      }
+    }
+    return null;
   }
 
   loggedIn() {
@@ -18,6 +27,7 @@ class AuthService {
         return true;
       } else return false;
     } catch (err) {
+      console.error('Error decoding token:', err);
       return false;
     }
   }
@@ -30,14 +40,14 @@ class AuthService {
   login(idToken) {
     // Saves user token to localStorage
     localStorage.setItem('id_token', idToken);
-
+    // Redirect to the home page
     window.location.assign('/');
   }
 
   logout() {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
-    // this will reload the page and reset the state of the application
+    // Redirect to the home page
     window.location.assign('/');
   }
 }

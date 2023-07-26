@@ -52,11 +52,16 @@ const resolvers = {
   },
   Mutation: {
     login: async (parent, { email, password }) => {
-      // If the user is authenticated, you can create and return the JWT token
       const user = await User.findOne({ email });
 
-      if (!user || !(await user.isCorrectPassword(password))) {
-        throw new AuthenticationError('Invalid email or password');
+      if (!user) {
+        throw new AuthenticationError('No user with this email found!');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect password!');
       }
 
       const token = signToken(user);
@@ -146,8 +151,9 @@ const resolvers = {
       try {
         console.log('Received input for createUser:', input);
         const user = await User.create(input);
+        const token = signToken(user);
         console.log('User created:', user);
-        return user;
+        return [ user, token ];
       } catch (err) {
         console.log('Error creating user:', err.message);
         throw new Error('Error creating user!');
