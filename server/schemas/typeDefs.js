@@ -97,12 +97,10 @@ const typeDefs = gql`
     description: String
     category: String
     goal: Float
-    startDateTime: DateTime
     endDateTime: DateTime
     images: [String]
     rewards: [RewardInput]
     socialMediaLinks: SocialMediaLinksInput
-    createdBy: ID
   }
 
   input SocialMediaLinksInput {

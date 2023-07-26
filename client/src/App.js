@@ -12,7 +12,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Home from "./pages/Home"
 import Project from "./pages/Project"
-// import Nav from "./components/Nav/Nav"
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import User from './pages/User';
@@ -63,10 +62,6 @@ function App() {
               />
               <Route
                 path="/me"
-                element={<User />}
-              />
-              <Route
-                path="/user/:id"
                 element={<User />}
               />
               <Route
