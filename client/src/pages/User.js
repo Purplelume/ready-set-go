@@ -9,10 +9,9 @@ import Auth from "../utils/auth";
 const User = () => {
   const { id } = useParams();
 
-  // If there is no `id` in the URL as a parameter, execute the `GET_USER` query for the logged-in user's information
   const { loading, error, data, refetch } = useQuery(GET_USER, {
-    variables: { id: id || Auth.getProfile().data._id }, // If `id` is not provided, use the logged-in user's ID
-    skip: !id && !Auth.loggedIn(), // Skip the query if `id` is not available and the user is not logged in
+    variables: { id: id || Auth.getProfile().data._id }, 
+    skip: !id && !Auth.loggedIn(), 
   });
 
   // Mutation to delete a project
@@ -23,7 +22,6 @@ const User = () => {
     try {
       const { data } = await deleteProject({ variables: { id: projectId } });
       console.log(data);
-      // Refetch the data to update the projects list after deletion
       refetch();
     } catch (error) {
       console.error('Error deleting project:', error);
@@ -90,8 +88,6 @@ const User = () => {
                   </p>
                 </Col>
                 <Col md={4}>
-                  {/* You can customize how to display images, rewards, updates, social media links, comments, and stretch goals */}
-                  {/* For example: */}
                   <h4>Images:</h4>
                   <ul className="list-unstyled">
                     {project.images.map((image, index) => (
@@ -120,7 +116,6 @@ const User = () => {
                       </li>
                     ))}
                   </ul>
-                  {/* Display other project details here */}
                   <Button variant="danger" onClick={() => handleDeleteProject(project._id)}>Delete Project</Button>
                 </Col>
               </Row>

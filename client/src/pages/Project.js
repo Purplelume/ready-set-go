@@ -45,8 +45,6 @@ function Project() {
           </p>
         </Col>
         <Col md={4}>
-          {/* You can customize how to display images, rewards, updates, social media links, comments, and stretch goals */}
-          {/* For example: */}
           <h4>Images:</h4>
           <ul className="list-unstyled">
             {project.images.map((image, index) => (
@@ -70,7 +68,6 @@ function Project() {
               </li>
             ))}
           </ul>
-          {/* Display other project details here */}
         </Col>
       </Row>
     </Container>

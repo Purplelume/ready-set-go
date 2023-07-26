@@ -57,7 +57,7 @@ const Signup = () => {
                                 <input
                                     className="form-input"
                                     placeholder="Your username"
-                                    name="userName" // Update the name attribute to userName
+                                    name="userName" 
                                     type="text"
                                     value={formState.userName}
                                     onChange={handleChange}
