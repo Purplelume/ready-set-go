@@ -37,6 +37,9 @@ const Header = () => {
               <Link className="btn btn-primary m-1" to="/me">
                 My Profile
               </Link>
+              <Link className="btn btn-primary m-1" to="/createproject">
+                Create a new Project
+              </Link>
               <Link className="btn btn-light m-1" onClick={logout}>
                 Logout
               </Link>

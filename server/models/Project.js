@@ -21,11 +21,9 @@ const projectSchema = new Schema({
   },
   startDateTime: {
     type: Date,
-    required: true,
   },
   endDateTime: {
     type: Date,
-    required: true,
   },
   images: [String],
   fundingProgress: {
@@ -76,7 +74,6 @@ const projectSchema = new Schema({
   createdBy: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
   },
   backers: {
     type: Number,

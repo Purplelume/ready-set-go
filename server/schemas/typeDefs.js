@@ -7,8 +7,8 @@ const typeDefs = gql`
     description: String!
     category: String!
     goal: Float!
-    startDateTime: DateTime!
-    endDateTime: DateTime!
+    startDateTime: DateTime
+    endDateTime: DateTime
     images: [String]
     fundingProgress: Float!
     rewards: [Reward]
@@ -17,7 +17,7 @@ const typeDefs = gql`
     comments: [Comment]
     stretchGoals: [StretchGoal]
     createdBy: User!
-    backers: Int!
+    backers: Int
   }
 
   type Reward {
@@ -127,8 +127,8 @@ const typeDefs = gql`
     description: String!
     category: String!
     goal: Float!
-    startDateTime: DateTime!
-    endDateTime: DateTime!
+    startDateTime: DateTime
+    endDateTime: DateTime
     images: [String]
     rewards: [RewardInput]
     socialMediaLinks: SocialMediaLinksInput
