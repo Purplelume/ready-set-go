@@ -72,7 +72,7 @@ export const HANDLE_DONATION_SUCCESS = gql`
 `;
 
 export const CREATE_PROJECT = gql`
-  mutation createProject($input: CreateProjectInput!) {
+  mutation Mutation($input: CreateProjectInput!) {
     createProject(input: $input) {
       _id
       title
@@ -99,13 +99,9 @@ export const CREATE_PROJECT = gql`
         linkedin
       }
       comments {
-        user {
-          _id
-          userName
-          email
-        }
         comment
         createdAt
+        
       }
       stretchGoals {
         goalAmount

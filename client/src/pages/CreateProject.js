@@ -146,6 +146,34 @@ const CreateProject = () => {
             </select>
           </div>
           <div className="mb-3">
+          <label htmlFor="startDateTime" className="form-label">
+            Start Date and Time
+          </label>
+          <input
+            type="datetime-local"
+            className="form-control"
+            id="startDateTime"
+            name="startDateTime"
+            value={projectData.startDateTime}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="endDateTime" className="form-label">
+            End Date and Time
+          </label>
+          <input
+            type="datetime-local"
+            className="form-control"
+            id="endDateTime"
+            name="endDateTime"
+            value={projectData.endDateTime}
+            onChange={handleChange}
+            required
+          />
+        </div>
+          <div className="mb-3">
             <label htmlFor="goal" className="form-label">
               Funding Goal ($)
             </label>

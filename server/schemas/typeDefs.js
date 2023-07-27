@@ -6,18 +6,18 @@ const typeDefs = gql`
     title: String!
     description: String!
     category: String!
-    goal: Float
+    goal: Float!
     startDateTime: DateTime
     endDateTime: DateTime
     images: [String]
-    fundingProgress: Float
+    fundingProgress: Float!
     rewards: [Reward]
     updates: [Update]
     socialMediaLinks: SocialMediaLinks
     comments: [Comment]
     stretchGoals: [StretchGoal]
-    createdBy: User
-    backers: Int
+    createdBy: User!
+    backers: Int!
   }
 
   type Reward {
@@ -126,13 +126,13 @@ const typeDefs = gql`
     title: String!
     description: String!
     category: String!
-    goal: Float
+    goal: Float!
     startDateTime: DateTime
     endDateTime: DateTime
     images: [String]
     rewards: [RewardInput]
     socialMediaLinks: SocialMediaLinksInput
-    createdBy: ID
+    createdBy: ID!
   }
 `;
 
