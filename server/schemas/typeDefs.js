@@ -6,7 +6,7 @@ const typeDefs = gql`
     title: String!
     description: String!
     category: String!
-    goal: Float!
+    goal: Float
     startDateTime: DateTime
     endDateTime: DateTime
     images: [String]
@@ -16,7 +16,7 @@ const typeDefs = gql`
     socialMediaLinks: SocialMediaLinks
     comments: [Comment]
     stretchGoals: [StretchGoal]
-    createdBy: User!
+    createdBy: User
     backers: Int
   }
 
@@ -126,13 +126,13 @@ const typeDefs = gql`
     title: String!
     description: String!
     category: String!
-    goal: Float!
+    goal: Float
     startDateTime: DateTime
     endDateTime: DateTime
     images: [String]
     rewards: [RewardInput]
     socialMediaLinks: SocialMediaLinksInput
-    createdBy: ID!
+    createdBy: ID
   }
 `;
 
