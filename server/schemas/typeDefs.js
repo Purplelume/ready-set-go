@@ -10,7 +10,7 @@ const typeDefs = gql`
     startDateTime: DateTime
     endDateTime: DateTime
     images: [String]
-    fundingProgress: Float!
+    fundingProgress: Float
     rewards: [Reward]
     updates: [Update]
     socialMediaLinks: SocialMediaLinks
@@ -88,7 +88,7 @@ const typeDefs = gql`
   }
 
   input RewardInput {
-    description: String!
+    description: String
     estimatedDeliveryDate: DateTime
   }
 
