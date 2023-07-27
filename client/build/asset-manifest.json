@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/static/css/main.cd053b4f.css",
+    "main.js": "/static/js/main.61b468c5.js",
+    "static/media/CentraNo2-Bold.ttf": "/static/media/CentraNo2-Bold.2faff7f7d3fc92a2fcd9.ttf",
+    "static/media/CentraNo2-Medium.ttf": "/static/media/CentraNo2-Medium.f94be5b326d78bb32b95.ttf",
+    "static/media/CentraNo2-Book.ttf": "/static/media/CentraNo2-Book.2b143fa4b734a3584043.ttf",
+    "static/media/footer-bg.png": "/static/media/footer-bg.7bd67c0f73571d0acc02.png",
+    "static/media/logo.png": "/static/media/logo.23296ee04619941b30ee.png",
+    "static/media/nav-icon3.svg": "/static/media/nav-icon3.97ed8e7eef60d61ca469881dd6f34511.svg",
+    "static/media/nav-icon1.svg": "/static/media/nav-icon1.dff40ae802524d8fc0cbce3f312abe4f.svg",
+    "index.html": "/index.html",
+    "main.cd053b4f.css.map": "/static/css/main.cd053b4f.css.map",
+    "main.61b468c5.js.map": "/static/js/main.61b468c5.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.cd053b4f.css",
+    "static/js/main.61b468c5.js"
+  ]
+}
